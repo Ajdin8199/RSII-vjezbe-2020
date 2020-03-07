@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using eProdaja.Models;
+using eProdaja.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,10 +32,25 @@ namespace eProdaja
         {
             services.AddControllers();
 
+            // komanda za instalaciju
+            //Install-Package Swashbuckle.AspNetCore -Version 5.0.0
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "eProdaja API", Version = "v1" });
             });
+
+            // skripta za kreiranje klasa iz baze
+            //Scaffold - DbContext 'Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;' Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models
+            var connection = "Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;";
+            services.AddDbContext<eProdajaContext>(options => options.UseSqlServer(connection));
+
+            // auto mapper
+
+            services.AddAutoMapper(typeof(Startup));
+
+            //dependency injection
+
+            services.AddScoped<IKorisniciService, KorisniciService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +61,7 @@ namespace eProdaja
                 app.UseDeveloperExceptionPage();
             }
 
+            // swagger
 
             app.UseSwagger();
 
