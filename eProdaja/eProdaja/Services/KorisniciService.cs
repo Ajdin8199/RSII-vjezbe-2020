@@ -21,7 +21,7 @@ namespace eProdaja.Services
 
         public IList<Model.Korisnici> GetAll()
         {
-            IList<Korisnici> entitiys = _context.Korisnici.ToList();
+            var entitiys = _context.Korisnici.ToList();
             //IList<Model.Korisnici> result = new List<Model.Korisnici>();
             //entitiys.ForEach(x => result.Add(new Model.Korisnici()
             //{
@@ -49,7 +49,7 @@ namespace eProdaja.Services
             var entity = _mapper.Map<Korisnici>(r);
             _context.Add(entity);
             _context.SaveChanges();
-            return _mapper.Map<Model.Korisnici>(r);
+            return _mapper.Map<Model.Korisnici>(entity);
         }
 
         public Korisnici Update(int Id, Korisnici korisnik)

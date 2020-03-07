@@ -39,14 +39,14 @@ namespace eProdaja
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "eProdaja API", Version = "v1" });
             });
 
+            // auto mapper
+
+            services.AddAutoMapper(typeof(Startup));
+
             // skripta za kreiranje klasa iz baze
             //Scaffold - DbContext 'Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;' Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models
             var connection = "Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;";
             services.AddDbContext<eProdajaContext>(options => options.UseSqlServer(connection));
-
-            // auto mapper
-
-            services.AddAutoMapper(typeof(Startup));
 
             //dependency injection
 
