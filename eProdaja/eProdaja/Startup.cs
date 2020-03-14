@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using eProdaja.Models;
 using eProdaja.Services;
+using eProdaja.WebAPI.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace eProdaja
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc(x => x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // komanda za instalaciju
             //Install-Package Swashbuckle.AspNetCore -Version 5.0.0

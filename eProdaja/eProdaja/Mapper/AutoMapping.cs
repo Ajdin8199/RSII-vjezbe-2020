@@ -13,6 +13,7 @@ namespace eProdaja.Mappers
         {
             CreateMap<Models.Korisnici, Model.Korisnici>(); // means you want to map from User to UserDTO
             CreateMap<KorisniciInsertRequest, Models.Korisnici>(); // means you want to map from User to UserDTO
+            CreateMap<KorisniciUpdateRequest, Models.Korisnici>(); // means you want to map from User to UserDTO
         }
     }
 }

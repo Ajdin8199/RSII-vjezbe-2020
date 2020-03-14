@@ -27,10 +27,28 @@ namespace eProdaja.Controllers
             return _service.GetAll();
         }
 
+        [HttpGet("{Id}")]
+        public Model.Korisnici GetById(int Id)
+        {
+            return _service.GetById(Id);
+        }
+
         [HttpPost]
         public Model.Korisnici Post(KorisniciInsertRequest k)
         {
             return _service.Insert(k);
+        }
+
+        [HttpPut("{Id}")]
+        public Model.Korisnici Update(int Id, [FromBody]KorisniciUpdateRequest r)
+        {
+            return _service.Update(Id, r);
+        }
+
+        [HttpPost("login")]
+        public Model.Korisnici Login(KorisniciLoginRequest r)
+        {
+            return _service.Login(r);
         }
     }
 }
