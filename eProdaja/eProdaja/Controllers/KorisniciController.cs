@@ -22,9 +22,9 @@ namespace eProdaja.Controllers
         }
 
         [HttpGet]
-        public IList<Model.Korisnici> Get()
+        public IList<Model.Korisnici> Get([FromQuery]KorisniciSearchRequest searchRequest)
         {
-            return _service.GetAll();
+            return _service.GetAll(searchRequest);
         }
 
         [HttpGet("{Id}")]

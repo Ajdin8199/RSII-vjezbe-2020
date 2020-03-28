@@ -22,22 +22,23 @@ namespace eProdaja.Services
             _mapper = mapper;
         }
 
-        public IList<Model.Korisnici> GetAll()
+        public IList<Model.Korisnici> GetAll(KorisniciSearchRequest searchRequest)
         {
-            var entitiys = _context.Korisnici.ToList();
-            //IList<Model.Korisnici> result = new List<Model.Korisnici>();
-            //entitiys.ForEach(x => result.Add(new Model.Korisnici()
-            //{
-            //    Email = x.Email,
-            //    Ime = x.Ime,
-            //    Prezime = x.Prezime,
-            //    KorisnikId = x.KorisnikId,
-            //    KorisnickoIme = x.KorisnickoIme,
-            //    Status = x.Status,
-            //    Telefon = x.Telefon
-            //}));
+            var query = _context.Korisnici.AsQueryable();
 
-            var result = _mapper.Map<IList<Model.Korisnici>>(entitiys);
+            if (!string.IsNullOrWhiteSpace(searchRequest?.Ime))
+            {
+                query = query.Where(x => x.Ime == searchRequest.Ime);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchRequest?.Prezime))
+            {
+                query = query.Where(x => x.Prezime == searchRequest.Prezime);
+            }
+
+            var list = query.ToList();
+
+            var result = _mapper.Map<IList<Model.Korisnici>>(list);
 
             return result;
         }

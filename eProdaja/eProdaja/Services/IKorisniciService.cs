@@ -9,7 +9,7 @@ namespace eProdaja.Services
 {
     public interface IKorisniciService
     {
-        IList<Model.Korisnici> GetAll();
+        IList<Model.Korisnici> GetAll(KorisniciSearchRequest request);
         Model.Korisnici GetById(int Id);
         Model.Korisnici Insert(KorisniciInsertRequest korisnik);
         Model.Korisnici Update(int Id, KorisniciUpdateRequest korisnik);
