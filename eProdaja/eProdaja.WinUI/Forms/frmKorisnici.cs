@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using eProdaja.Model;
 using eProdaja.Model.Requests;
+using eProdaja.WinUI.Forms;
 using Flurl.Http;
 
 namespace eProdaja.WinUI
@@ -15,6 +16,11 @@ namespace eProdaja.WinUI
         {
             InitializeComponent();
             dgvKorisnici.AutoGenerateColumns = false;
+        }
+
+        private void frmKorisnici_Load(object sender, EventArgs e)
+        {
+            btnPrikazi_Click(sender, e);
         }
 
         private async void btnPrikazi_Click(object sender, EventArgs e)
@@ -32,10 +38,15 @@ namespace eProdaja.WinUI
         private void dgvKorisnici_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var item = dgvKorisnici.SelectedRows[0].DataBoundItem;
-
             frmKorisniciDetalji frm = new frmKorisniciDetalji(item as Korisnici);
-            //frm.Show();
             frm.ShowDialog();
         }
+
+        private void btnDodaj_Click(object sender, EventArgs e)
+        {
+            frmKorisniciDodaj frm = new frmKorisniciDodaj();
+            frm.ShowDialog();
+        }
+
     }
 }

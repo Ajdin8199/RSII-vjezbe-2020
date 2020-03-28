@@ -33,6 +33,12 @@ namespace eProdaja.Controllers
             return _service.GetById(Id);
         }
 
+        [HttpDelete("{Id}")]
+        public Model.Korisnici Delete(int Id)
+        {
+            return _service.Delete(Id);
+        }
+
         [HttpPost]
         public Model.Korisnici Post(KorisniciInsertRequest k)
         {

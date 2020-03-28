@@ -14,5 +14,6 @@ namespace eProdaja.Services
         Model.Korisnici Insert(KorisniciInsertRequest korisnik);
         Model.Korisnici Update(int Id, KorisniciUpdateRequest korisnik);
         Model.Korisnici Login(KorisniciLoginRequest r);
+        Model.Korisnici Delete(int Id);
     }
 }

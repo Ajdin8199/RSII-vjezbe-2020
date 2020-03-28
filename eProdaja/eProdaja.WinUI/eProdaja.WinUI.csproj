@@ -56,25 +56,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIService.cs" />
-    <Compile Include="frmKorisnici.cs">
+    <Compile Include="Forms\frmKorisnici.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmKorisnici.Designer.cs">
+    <Compile Include="Forms\frmKorisnici.Designer.cs">
       <DependentUpon>frmKorisnici.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmKorisniciDetalji.cs">
+    <Compile Include="Forms\frmKorisniciDetalji.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmKorisniciDetalji.Designer.cs">
+    <Compile Include="Forms\frmKorisniciDetalji.Designer.cs">
       <DependentUpon>frmKorisniciDetalji.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmKorisniciDodaj.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmKorisniciDodaj.Designer.cs">
+      <DependentUpon>frmKorisniciDodaj.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmKorisnici.resx">
+    <EmbeddedResource Include="Forms\frmKorisnici.resx">
       <DependentUpon>frmKorisnici.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmKorisniciDetalji.resx">
+    <EmbeddedResource Include="Forms\frmKorisniciDetalji.resx">
       <DependentUpon>frmKorisniciDetalji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmKorisniciDodaj.resx">
+      <DependentUpon>frmKorisniciDodaj.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -36,11 +36,7 @@ namespace eProdaja.Services
                 query = query.Where(x => x.Prezime == searchRequest.Prezime);
             }
 
-            var list = query.ToList();
-
-            var result = _mapper.Map<IList<Model.Korisnici>>(list);
-
-            return result;
+            return _mapper.Map<IList<Model.Korisnici>>(query.ToList());
         }
 
         public Model.Korisnici GetById(int Id)
@@ -97,6 +93,15 @@ namespace eProdaja.Services
             _context.SaveChanges();
 
             return _mapper.Map<Model.Korisnici>(entity);
+        }
+
+        public Model.Korisnici Delete(int Id)
+        {
+            var obj = _context.Korisnici.Find(Id);
+            var entity = _mapper.Map<Model.Korisnici>(obj);
+            _context.Korisnici.Remove(obj);
+            _context.SaveChanges();
+            return entity;
         }
 
         public Model.Korisnici Login(KorisniciLoginRequest r)
