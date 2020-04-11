@@ -120,4 +120,7 @@
   <data name="ApiUrl" xml:space="preserve">
     <value>https://localhost:44362/api/</value>
   </data>
+  <data name="Validation_Key" xml:space="preserve">
+    <value>Obavezno polje</value>
+  </data>
 </root>

@@ -68,5 +68,14 @@ namespace eProdaja.WinUI.Properties {
                 return ResourceManager.GetString("ApiUrl", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obavezno polje.
+        /// </summary>
+        internal static string Validation_Key {
+            get {
+                return ResourceManager.GetString("Validation_Key", resourceCulture);
+            }
+        }
     }
 }

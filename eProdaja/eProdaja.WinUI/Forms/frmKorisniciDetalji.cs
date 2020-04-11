@@ -75,14 +75,17 @@ namespace eProdaja.WinUI
                 }
                 else
                 {
+                    var ulogeList = clbUloge.CheckedItems.Cast<Uloge>();
+                    var ulogeIdList = ulogeList.Select(x => x.UlogaId).ToList();
                     // update
-                    KorisniciInsertRequest request = new KorisniciInsertRequest
+                    KorisniciUpdateRequest request = new KorisniciUpdateRequest
                     {
                         Ime = txtIme.Text,
                         Prezime = txtPrezime.Text,
                         Status = chkStatus.Checked,
                         Telefon = txtTelefon.Text,
-                        Email = txtEmail.Text
+                        Email = txtEmail.Text,
+                        Uloge = ulogeIdList
                     };
 
                     var korisnik = await korisniciService.Update<Korisnici>(_korisnik.KorisnikId, request);
@@ -93,11 +96,14 @@ namespace eProdaja.WinUI
             }
         }
 
+
+        // VALIDACIJA
+
         private void txtIme_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIme.Text))
             {
-                errorProvider.SetError(txtIme, "Obavezno polje");
+                errorProvider.SetError(txtIme, Properties.Resources.Validation_Key);
                 e.Cancel = true;
             }
             else
@@ -110,7 +116,7 @@ namespace eProdaja.WinUI
         {
             if (string.IsNullOrWhiteSpace(txtPrezime.Text))
             {
-                errorProvider.SetError(txtPrezime, "Obavezno polje");
+                errorProvider.SetError(txtPrezime, Properties.Resources.Validation_Key);
                 e.Cancel = true;
             }
             else
@@ -123,7 +129,7 @@ namespace eProdaja.WinUI
         {
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                errorProvider.SetError(txtEmail, "Obavezno polje");
+                errorProvider.SetError(txtEmail, Properties.Resources.Validation_Key);
                 e.Cancel = true;
             }
             else

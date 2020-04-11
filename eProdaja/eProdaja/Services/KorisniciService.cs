@@ -103,6 +103,17 @@ namespace eProdaja.Services
 
             _context.SaveChanges();
 
+            foreach (var uloga in r.Uloge)
+            {
+                KorisniciUloge korisniciUloge = new KorisniciUloge();
+                korisniciUloge.KorisnikId = entity.KorisnikId;
+                korisniciUloge.UlogaId = uloga;
+                korisniciUloge.DatumIzmjene = DateTime.Now;
+                _context.KorisniciUloge.Add(korisniciUloge);
+            }
+
+            _context.SaveChanges();
+
             return _mapper.Map<Model.Korisnici>(entity);
         }
 
