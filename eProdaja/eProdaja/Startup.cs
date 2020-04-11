@@ -53,6 +53,9 @@ namespace eProdaja
             //dependency injection
 
             services.AddScoped<IKorisniciService, KorisniciService>();
+            services.AddScoped<IUlogeService, UlogeService>();
+            services.AddScoped<IVrsteProizvodaService, VrsteProizvodaService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

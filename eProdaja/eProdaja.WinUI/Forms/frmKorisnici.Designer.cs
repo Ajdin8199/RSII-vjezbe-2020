@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.dgvKorisnici = new System.Windows.Forms.DataGridView();
-            this.btnPrikazi = new System.Windows.Forms.Button();
-            this.txtIme = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Prezime = new System.Windows.Forms.Label();
-            this.txtPrezime = new System.Windows.Forms.TextBox();
-            this.btnDodaj = new System.Windows.Forms.Button();
             this.clmIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmPrezime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmTelefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmStatus = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnPrikazi = new System.Windows.Forms.Button();
+            this.txtIme = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Prezime = new System.Windows.Forms.Label();
+            this.txtPrezime = new System.Windows.Forms.TextBox();
+            this.btnDodaj = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,67 +54,15 @@
             this.clmEmail,
             this.clmUsername,
             this.clmStatus});
-            this.dgvKorisnici.Location = new System.Drawing.Point(12, 114);
+            this.dgvKorisnici.Location = new System.Drawing.Point(36, 137);
             this.dgvKorisnici.Name = "dgvKorisnici";
             this.dgvKorisnici.RowHeadersWidth = 51;
             this.dgvKorisnici.RowTemplate.Height = 24;
             this.dgvKorisnici.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKorisnici.Size = new System.Drawing.Size(776, 311);
+            this.dgvKorisnici.Size = new System.Drawing.Size(1114, 446);
             this.dgvKorisnici.TabIndex = 0;
             this.dgvKorisnici.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKorisnici_CellDoubleClick);
             this.dgvKorisnici.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKorisnici_CellDoubleClick);
-            // 
-            // btnPrikazi
-            // 
-            this.btnPrikazi.Location = new System.Drawing.Point(427, 38);
-            this.btnPrikazi.Name = "btnPrikazi";
-            this.btnPrikazi.Size = new System.Drawing.Size(163, 43);
-            this.btnPrikazi.TabIndex = 1;
-            this.btnPrikazi.Text = "Prikaži";
-            this.btnPrikazi.UseVisualStyleBackColor = true;
-            this.btnPrikazi.Click += new System.EventHandler(this.btnPrikazi_Click);
-            // 
-            // txtIme
-            // 
-            this.txtIme.Location = new System.Drawing.Point(110, 48);
-            this.txtIme.Name = "txtIme";
-            this.txtIme.Size = new System.Drawing.Size(131, 22);
-            this.txtIme.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(110, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Ime :";
-            // 
-            // Prezime
-            // 
-            this.Prezime.AutoSize = true;
-            this.Prezime.Location = new System.Drawing.Point(259, 25);
-            this.Prezime.Name = "Prezime";
-            this.Prezime.Size = new System.Drawing.Size(67, 17);
-            this.Prezime.TabIndex = 5;
-            this.Prezime.Text = "Prezime :";
-            // 
-            // txtPrezime
-            // 
-            this.txtPrezime.Location = new System.Drawing.Point(259, 48);
-            this.txtPrezime.Name = "txtPrezime";
-            this.txtPrezime.Size = new System.Drawing.Size(131, 22);
-            this.txtPrezime.TabIndex = 4;
-            // 
-            // btnDodaj
-            // 
-            this.btnDodaj.Location = new System.Drawing.Point(610, 38);
-            this.btnDodaj.Name = "btnDodaj";
-            this.btnDodaj.Size = new System.Drawing.Size(163, 43);
-            this.btnDodaj.TabIndex = 6;
-            this.btnDodaj.Text = "Dodaj";
-            this.btnDodaj.UseVisualStyleBackColor = true;
-            this.btnDodaj.Click += new System.EventHandler(this.btnDodaj_Click);
             // 
             // clmIme
             // 
@@ -164,11 +112,63 @@
             this.clmStatus.Name = "clmStatus";
             this.clmStatus.Width = 125;
             // 
+            // btnPrikazi
+            // 
+            this.btnPrikazi.Location = new System.Drawing.Point(483, 63);
+            this.btnPrikazi.Name = "btnPrikazi";
+            this.btnPrikazi.Size = new System.Drawing.Size(163, 43);
+            this.btnPrikazi.TabIndex = 1;
+            this.btnPrikazi.Text = "Prikaži";
+            this.btnPrikazi.UseVisualStyleBackColor = true;
+            this.btnPrikazi.Click += new System.EventHandler(this.btnPrikazi_Click);
+            // 
+            // txtIme
+            // 
+            this.txtIme.Location = new System.Drawing.Point(166, 73);
+            this.txtIme.Name = "txtIme";
+            this.txtIme.Size = new System.Drawing.Size(131, 22);
+            this.txtIme.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(166, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Ime :";
+            // 
+            // Prezime
+            // 
+            this.Prezime.AutoSize = true;
+            this.Prezime.Location = new System.Drawing.Point(315, 50);
+            this.Prezime.Name = "Prezime";
+            this.Prezime.Size = new System.Drawing.Size(67, 17);
+            this.Prezime.TabIndex = 5;
+            this.Prezime.Text = "Prezime :";
+            // 
+            // txtPrezime
+            // 
+            this.txtPrezime.Location = new System.Drawing.Point(315, 73);
+            this.txtPrezime.Name = "txtPrezime";
+            this.txtPrezime.Size = new System.Drawing.Size(131, 22);
+            this.txtPrezime.TabIndex = 4;
+            // 
+            // btnDodaj
+            // 
+            this.btnDodaj.Location = new System.Drawing.Point(666, 63);
+            this.btnDodaj.Name = "btnDodaj";
+            this.btnDodaj.Size = new System.Drawing.Size(163, 43);
+            this.btnDodaj.TabIndex = 6;
+            this.btnDodaj.Text = "Dodaj";
+            this.btnDodaj.UseVisualStyleBackColor = true;
+            this.btnDodaj.Click += new System.EventHandler(this.btnDodaj_Click);
+            // 
             // frmKorisnici
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1191, 743);
             this.Controls.Add(this.btnDodaj);
             this.Controls.Add(this.Prezime);
             this.Controls.Add(this.txtPrezime);

@@ -47,7 +47,7 @@ namespace eProdaja.Services
 
         public Model.Korisnici Insert(KorisniciInsertRequest r)
         {
-            var entity = _mapper.Map<Models.Korisnici>(r);
+            Korisnici entity = _mapper.Map<Models.Korisnici>(r);
             _context.Add(entity);
 
             if (r.Password != r.PasswordPotvrda)
@@ -57,6 +57,17 @@ namespace eProdaja.Services
 
             entity.LozinkaSalt = GenerateSalt();
             entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, r.Password);
+
+            _context.SaveChanges();
+
+            foreach (var uloga in r.Uloge)
+            {
+                KorisniciUloge korisniciUloge = new KorisniciUloge();
+                korisniciUloge.KorisnikId = entity.KorisnikId;
+                korisniciUloge.UlogaId = uloga;
+                korisniciUloge.DatumIzmjene = DateTime.Now;
+                _context.KorisniciUloge.Add(korisniciUloge);
+            }
 
             _context.SaveChanges();
             return _mapper.Map<Model.Korisnici>(entity);

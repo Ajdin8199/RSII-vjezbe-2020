@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using eProdaja.Model;
 using eProdaja.Model.Requests;
-using eProdaja.WinUI.Forms;
 using Flurl.Http;
 
 namespace eProdaja.WinUI
@@ -31,7 +30,7 @@ namespace eProdaja.WinUI
                 Prezime = txtPrezime.Text
             };
             var list = await korisniciService.GetAll<List<Korisnici>>(searchRequest);
-
+            
             dgvKorisnici.DataSource = list;
         }
 
@@ -44,7 +43,7 @@ namespace eProdaja.WinUI
 
         private void btnDodaj_Click(object sender, EventArgs e)
         {
-            frmKorisniciDodaj frm = new frmKorisniciDodaj();
+            frmKorisniciDetalji frm = new frmKorisniciDetalji();
             frm.ShowDialog();
         }
 
