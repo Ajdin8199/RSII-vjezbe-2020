@@ -6,6 +6,7 @@ using AutoMapper;
 using eProdaja.Models;
 using eProdaja.Services;
 using eProdaja.WebAPI.Filters;
+using eProdaja.Model.Requests;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -52,9 +53,15 @@ namespace eProdaja
 
             //dependency injection
 
-            services.AddScoped<IKorisniciService, KorisniciService>();
+            //services.AddScoped<IKorisniciService, KorisniciService>();
             services.AddScoped<IUlogeService, UlogeService>();
-            services.AddScoped<IVrsteProizvodaService, VrsteProizvodaService>();
+
+            services.AddScoped<IService<Model.VrsteProizvoda, object>, BaseService<Model.VrsteProizvoda, object, VrsteProizvoda>>();
+            services.AddScoped<ICRUDService<Model.Proizvod, ProizvodiSearchRequest, ProizvodiInsertRequest, ProizvodUpdateRequest>
+                ,BaseCRUDService<Model.Proizvod, ProizvodiSearchRequest, ProizvodiInsertRequest, ProizvodUpdateRequest, Proizvodi>>();
+            
+            services.AddScoped<ICRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest>
+                ,BaseCRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest, Korisnici>>();
 
         }
 

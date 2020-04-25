@@ -10,51 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eProdaja.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class KorisniciController : ControllerBase
+    public class KorisniciController :
+        BaseCRUDController<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest>
     {
-        protected IKorisniciService _service;
-
-        public KorisniciController(IKorisniciService korisniciService)
+        public KorisniciController(ICRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest> service)
+            : base(service)
         {
-            _service = korisniciService;
-        }
 
-        [HttpGet]
-        public IList<Model.Korisnici> Get([FromQuery]KorisniciSearchRequest searchRequest)
-        {
-            return _service.GetAll(searchRequest);
-        }
-
-        [HttpGet("{Id}")]
-        public Model.Korisnici GetById(int Id)
-        {
-            return _service.GetById(Id);
-        }
-
-        [HttpDelete("{Id}")]
-        public Model.Korisnici Delete(int Id)
-        {
-            return _service.Delete(Id);
-        }
-
-        [HttpPost]
-        public Model.Korisnici Post(KorisniciInsertRequest k)
-        {
-            return _service.Insert(k);
-        }
-
-        [HttpPut("{Id}")]
-        public Model.Korisnici Update(int Id, [FromBody]KorisniciUpdateRequest r)
-        {
-            return _service.Update(Id, r);
-        }
-
-        [HttpPost("login")]
-        public Model.Korisnici Login(KorisniciLoginRequest r)
-        {
-            return _service.Login(r);
         }
     }
 }
