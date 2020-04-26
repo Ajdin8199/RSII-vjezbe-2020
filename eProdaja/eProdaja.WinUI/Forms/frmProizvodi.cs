@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,19 +68,49 @@ namespace eProdaja.WinUI.Forms
             dgvProizvodi.DataSource = result;
         }
 
+        ProizvodiInsertRequest r = new ProizvodiInsertRequest();
+
         private async void btn_Sacuvaj_Click(object sender, EventArgs e)
         {
-            ProizvodiInsertRequest r = new ProizvodiInsertRequest
+
+            r.Cijena = decimal.Parse(txtCijena.Text);
+            r.Naziv = txtNaziv.Text;
+            r.Sifra = txtSifra.Text;
+            r.Status = true;
+
+            var idJedMjereObj = cmbVrProizvoda.SelectedValue;
+
+            if (int.TryParse(idJedMjereObj.ToString(), out int idJedMjere))
             {
-                Cijena = decimal.Parse(txtCijena.Text),
-                Naziv = txtNaziv.Text,
-                Sifra = txtSifra.Text,
-                Status = true,
-                JedinicaMjereId = cmbJedMjere.SelectedIndex,
-                VrstaId = cmbVrProizvoda.SelectedIndex
-            };
+                r.JedinicaMjereId = idJedMjere;
+            }
+
+            var idVrProizvodaObj = cmbVrProizvoda.SelectedValue;
+
+            if (int.TryParse(idVrProizvodaObj.ToString(), out int idVrProizvoda))
+            {
+                r.VrstaId = idVrProizvoda;
+            }
+
+
             await _proizvodi.Insert<Model.Proizvod>(r);
             MessageBox.Show("Operacija uspjesna");
+        }
+
+        private void btn_DodajImg_Click(object sender, EventArgs e)
+        {
+            var result = openFileDialog1.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                var fileName = openFileDialog1.FileName;
+                var file = File.ReadAllBytes(fileName);
+                r.Slika = file;
+                txtSlika.Text = fileName;
+
+                Image img = Image.FromFile(fileName);
+                pictureBox1.Image = img;
+            }
         }
     }
 }

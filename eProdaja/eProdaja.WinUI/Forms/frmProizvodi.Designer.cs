@@ -43,7 +43,10 @@
             this.cmbJedMjere = new System.Windows.Forms.ComboBox();
             this.txtCijena = new System.Windows.Forms.TextBox();
             this.dgvProizvodi = new System.Windows.Forms.DataGridView();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProizvodi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -129,6 +132,7 @@
             this.btn_DodajImg.TabIndex = 10;
             this.btn_DodajImg.Text = "Dodaj";
             this.btn_DodajImg.UseVisualStyleBackColor = true;
+            this.btn_DodajImg.Click += new System.EventHandler(this.btn_DodajImg_Click);
             // 
             // btn_Sacuvaj
             // 
@@ -174,11 +178,25 @@
             this.dgvProizvodi.Size = new System.Drawing.Size(899, 216);
             this.dgvProizvodi.TabIndex = 16;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(653, 50);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(205, 153);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmProizvodi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 624);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dgvProizvodi);
             this.Controls.Add(this.txtCijena);
             this.Controls.Add(this.cmbJedMjere);
@@ -198,6 +216,7 @@
             this.Text = "frmProizvodi";
             this.Load += new System.EventHandler(this.frmProizvodi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProizvodi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,5 +239,7 @@
         private System.Windows.Forms.ComboBox cmbJedMjere;
         private System.Windows.Forms.TextBox txtCijena;
         private System.Windows.Forms.DataGridView dgvProizvodi;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
