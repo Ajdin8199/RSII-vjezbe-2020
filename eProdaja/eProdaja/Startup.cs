@@ -57,11 +57,14 @@ namespace eProdaja
             services.AddScoped<IUlogeService, UlogeService>();
 
             services.AddScoped<IService<Model.VrsteProizvoda, object>, BaseService<Model.VrsteProizvoda, object, VrsteProizvoda>>();
+
+            services.AddScoped<IService<Model.JediniceMjere, object>, BaseService<Model.JediniceMjere, object, JediniceMjere>>();
+
             services.AddScoped<ICRUDService<Model.Proizvod, ProizvodiSearchRequest, ProizvodiInsertRequest, ProizvodUpdateRequest>
-                ,BaseCRUDService<Model.Proizvod, ProizvodiSearchRequest, ProizvodiInsertRequest, ProizvodUpdateRequest, Proizvodi>>();
+                ,ProizvodService>();
             
             services.AddScoped<ICRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest>
-                ,BaseCRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest, Korisnici>>();
+                ,KorisniciService>();
 
         }
 

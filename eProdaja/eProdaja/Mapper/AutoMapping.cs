@@ -17,7 +17,9 @@ namespace eProdaja.Mappers
             CreateMap<KorisniciUpdateRequest, Models.Korisnici>(); // means you want to map from User to UserDTO
             CreateMap<Uloge, Model.Uloge>();
             CreateMap<VrsteProizvoda, Model.VrsteProizvoda>();
-            
+            CreateMap<JediniceMjere, Model.JediniceMjere>();
+            CreateMap<Proizvodi, Model.Proizvod>();
+            CreateMap<ProizvodiInsertRequest, Proizvodi>();
         }
     }
 }

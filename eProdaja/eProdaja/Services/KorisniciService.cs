@@ -11,18 +11,14 @@ using System.Threading.Tasks;
 
 namespace eProdaja.Services
 {
-    public class KorisniciService : IKorisniciService
+    public class KorisniciService : BaseCRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest, Models.Korisnici>
     {
-        protected eProdajaContext _context;
-        protected IMapper _mapper;
 
-        public KorisniciService(eProdajaContext context, IMapper mapper)
+        public KorisniciService(eProdajaContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
-            _mapper = mapper;
         }
 
-        public IList<Model.Korisnici> GetAll(KorisniciSearchRequest searchRequest)
+        public override List<Model.Korisnici> Get(KorisniciSearchRequest searchRequest)
         {
             var query = _context.Korisnici.AsQueryable();
 
@@ -36,18 +32,12 @@ namespace eProdaja.Services
                 query = query.Where(x => x.Prezime == searchRequest.Prezime);
             }
 
-            return _mapper.Map<IList<Model.Korisnici>>(query.ToList());
+            return _mapper.Map<List<Model.Korisnici>>(query.ToList());
         }
 
-        public Model.Korisnici GetById(int Id)
+        public override Model.Korisnici Insert(KorisniciInsertRequest r)
         {
-            var entity = _context.Korisnici.Find(Id);
-            return _mapper.Map<Model.Korisnici>(entity);
-        }
-
-        public Model.Korisnici Insert(KorisniciInsertRequest r)
-        {
-            Korisnici entity = _mapper.Map<Models.Korisnici>(r);
+            Models.Korisnici entity = _mapper.Map<Models.Korisnici>(r);
             _context.Add(entity);
 
             if (r.Password != r.PasswordPotvrda)
@@ -73,28 +63,7 @@ namespace eProdaja.Services
             return _mapper.Map<Model.Korisnici>(entity);
         }
 
-        public static string GenerateSalt()
-        {
-            var buf = new byte[16];
-            (new RNGCryptoServiceProvider()).GetBytes(buf);
-            return Convert.ToBase64String(buf);
-        }
-
-        public static string GenerateHash(string salt, string password)
-        {
-            byte[] src = Convert.FromBase64String(salt);
-            byte[] bytes = Encoding.Unicode.GetBytes(password);
-            byte[] dst = new byte[src.Length + bytes.Length];
-
-            System.Buffer.BlockCopy(src, 0, dst, 0, src.Length);
-            System.Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
-
-            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
-            byte[] inArray = algorithm.ComputeHash(dst);
-            return Convert.ToBase64String(inArray);
-        }
-
-        public Model.Korisnici Update(int Id, KorisniciUpdateRequest r)
+        public override Model.Korisnici Update(int Id, KorisniciUpdateRequest r)
         {
             // dobavljanje iz baze
             var entity = _context.Korisnici.Find(Id);
@@ -117,13 +86,25 @@ namespace eProdaja.Services
             return _mapper.Map<Model.Korisnici>(entity);
         }
 
-        public Model.Korisnici Delete(int Id)
+        public static string GenerateSalt()
         {
-            var obj = _context.Korisnici.Find(Id);
-            var entity = _mapper.Map<Model.Korisnici>(obj);
-            _context.Korisnici.Remove(obj);
-            _context.SaveChanges();
-            return entity;
+            var buf = new byte[16];
+            (new RNGCryptoServiceProvider()).GetBytes(buf);
+            return Convert.ToBase64String(buf);
+        }
+
+        public static string GenerateHash(string salt, string password)
+        {
+            byte[] src = Convert.FromBase64String(salt);
+            byte[] bytes = Encoding.Unicode.GetBytes(password);
+            byte[] dst = new byte[src.Length + bytes.Length];
+
+            System.Buffer.BlockCopy(src, 0, dst, 0, src.Length);
+            System.Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
+
+            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
+            byte[] inArray = algorithm.ComputeHash(dst);
+            return Convert.ToBase64String(inArray);
         }
 
         public Model.Korisnici Login(KorisniciLoginRequest r)

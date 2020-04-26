@@ -117,5 +117,13 @@ namespace eProdaja.WinUI.Forms
             frmKorisniciDetalji frm = new frmKorisniciDetalji();
             frm.Show();
         }
+
+        private void proizvodiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmProizvodi frm = new frmProizvodi();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
     }
 }
