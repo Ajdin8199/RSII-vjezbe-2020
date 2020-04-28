@@ -12,9 +12,10 @@ namespace eProdaja.Mappers
     {
         public AutoMapping()
         {
-            CreateMap<Models.Korisnici, Model.Korisnici>(); // means you want to map from User to UserDTO
-            CreateMap<KorisniciInsertRequest, Models.Korisnici>(); // means you want to map from User to UserDTO
-            CreateMap<KorisniciUpdateRequest, Models.Korisnici>(); // means you want to map from User to UserDTO
+            CreateMap<Models.Korisnici, Model.Korisnici>(); 
+            CreateMap<Models.KorisniciUloge, Model.KorisniciUloge>(); 
+            CreateMap<KorisniciInsertRequest, Models.Korisnici>(); 
+            CreateMap<KorisniciUpdateRequest, Models.Korisnici>(); 
             CreateMap<Uloge, Model.Uloge>();
             CreateMap<VrsteProizvoda, Model.VrsteProizvoda>();
             CreateMap<JediniceMjere, Model.JediniceMjere>();

@@ -1,89 +1,43 @@
-﻿using AutoMapper;
-using eProdaja.Filters;
-using eProdaja.Model.Requests;
-using eProdaja.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using eProdaja.Model;
+using eProdaja.Model.Requests;
+using eProdaja.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace eProdaja.Services
+namespace eProdaja.WebAPI.Services
 {
-    public class KorisniciService : BaseCRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest, Models.Korisnici>
+
+    public class KorisniciService : IKorisniciService
     {
-
-        public KorisniciService(eProdajaContext context, IMapper mapper) : base(context, mapper)
+        private readonly eProdajaContext _context;
+        private readonly IMapper _mapper;
+        public KorisniciService(eProdajaContext context, IMapper mapper)
         {
+            _context = context;
+            _mapper = mapper;
         }
 
-        public override List<Model.Korisnici> Get(KorisniciSearchRequest searchRequest)
+        public Model.Korisnici Authenticiraj(KorisniciLoginRequest request)
         {
-            var query = _context.Korisnici.AsQueryable();
+            var user = _context.Korisnici.Include("KorisniciUloge.Uloga").FirstOrDefault(x => x.KorisnickoIme == request.Username);
 
-            if (!string.IsNullOrWhiteSpace(searchRequest?.Ime))
+            if (user != null)
             {
-                query = query.Where(x => x.Ime == searchRequest.Ime);
+                var newHash = GenerateHash(user.LozinkaSalt, request.Password);
+
+                if (newHash == user.LozinkaHash)
+                {
+                    Model.Korisnici korisnici = _mapper.Map<Model.Korisnici>(user);
+                    return korisnici;
+                }
             }
-
-            if (!string.IsNullOrWhiteSpace(searchRequest?.Prezime))
-            {
-                query = query.Where(x => x.Prezime == searchRequest.Prezime);
-            }
-
-            return _mapper.Map<List<Model.Korisnici>>(query.ToList());
-        }
-
-        public override Model.Korisnici Insert(KorisniciInsertRequest r)
-        {
-            Models.Korisnici entity = _mapper.Map<Models.Korisnici>(r);
-            _context.Add(entity);
-
-            if (r.Password != r.PasswordPotvrda)
-            {
-                throw new Exception("Potvrda i password se ne slažu");
-            }
-
-            entity.LozinkaSalt = GenerateSalt();
-            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, r.Password);
-
-            _context.SaveChanges();
-
-            foreach (var uloga in r.Uloge)
-            {
-                KorisniciUloge korisniciUloge = new KorisniciUloge();
-                korisniciUloge.KorisnikId = entity.KorisnikId;
-                korisniciUloge.UlogaId = uloga;
-                korisniciUloge.DatumIzmjene = DateTime.Now;
-                _context.KorisniciUloge.Add(korisniciUloge);
-            }
-
-            _context.SaveChanges();
-            return _mapper.Map<Model.Korisnici>(entity);
-        }
-
-        public override Model.Korisnici Update(int Id, KorisniciUpdateRequest r)
-        {
-            // dobavljanje iz baze
-            var entity = _context.Korisnici.Find(Id);
-            // mapiranje dobavljenih kolona
-            _mapper.Map(r, entity);
-
-            _context.SaveChanges();
-
-            foreach (var uloga in r.Uloge)
-            {
-                KorisniciUloge korisniciUloge = new KorisniciUloge();
-                korisniciUloge.KorisnikId = entity.KorisnikId;
-                korisniciUloge.UlogaId = uloga;
-                korisniciUloge.DatumIzmjene = DateTime.Now;
-                _context.KorisniciUloge.Add(korisniciUloge);
-            }
-
-            _context.SaveChanges();
-
-            return _mapper.Map<Model.Korisnici>(entity);
+            return null;
         }
 
         public static string GenerateSalt()
@@ -107,22 +61,94 @@ namespace eProdaja.Services
             return Convert.ToBase64String(inArray);
         }
 
-        public Model.Korisnici Login(KorisniciLoginRequest r)
+
+        public List<Model.Korisnici> Get(KorisniciSearchRequest request)
         {
-            var entity = _context.Korisnici.FirstOrDefault(x => x.KorisnickoIme == r.Username);
+            var query = _context.Korisnici.AsQueryable();
 
-            if (entity == null)
+            if (!string.IsNullOrWhiteSpace(request?.Ime))
             {
-                throw new UserException("Pogresan username ili password");
+                query = query.Where(x => x.Ime.StartsWith(request.Ime));
             }
 
-            var hash = GenerateHash(entity.LozinkaSalt, r.Password);
-
-            if (hash != entity.LozinkaHash)
+            if (!string.IsNullOrWhiteSpace(request?.Prezime))
             {
-                throw new UserException("Pogresan username ili password");
+                query = query.Where(x => x.Prezime.StartsWith(request.Prezime));
             }
+
+            if (!string.IsNullOrWhiteSpace(request?.Email))
+            {
+                query = query.Where(x => x.Prezime.StartsWith(request.Email));
+            }
+            
+            if (request?.Status != null)
+            {
+                query = query.Where(x => x.Status == request.Status);
+            }
+
+            var list = query.ToList();
+
+            return _mapper.Map<List<Model.Korisnici>>(list);
+        }
+
+        public Model.Korisnici GetById(int id)
+        {
+            var entity = _context.Korisnici.Find(id);
+
             return _mapper.Map<Model.Korisnici>(entity);
         }
+
+        public Model.Korisnici Insert(KorisniciInsertRequest request)
+        {
+            var entity = _mapper.Map<Models.Korisnici>(request);
+
+            if (request.Password != request.PasswordPotvrda)
+            {
+                throw new Exception("Passwordi se ne slažu");
+            }
+
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
+
+            _context.Korisnici.Add(entity);
+            _context.SaveChanges();
+
+            foreach (var uloga in request.Uloge)
+            {
+                Models.KorisniciUloge korisniciUloge = new Models.KorisniciUloge();
+                korisniciUloge.KorisnikId = entity.KorisnikId;
+                korisniciUloge.UlogaId = uloga;
+                korisniciUloge.DatumIzmjene = DateTime.Now;
+                _context.KorisniciUloge.Add(korisniciUloge);
+            }
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.Korisnici>(entity);
+        }
+
+        public Model.Korisnici Update(int id, KorisniciInsertRequest request)
+        {
+            var entity = _context.Korisnici.Find(id);
+            _context.Korisnici.Attach(entity);
+            _context.Korisnici.Update(entity);
+
+            if (!string.IsNullOrWhiteSpace(request.Password))
+            {
+                if (request.Password != request.PasswordPotvrda)
+                {
+                    throw new Exception("Passwordi se ne slažu");
+                }
+
+                entity.LozinkaSalt = GenerateSalt();
+                entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
+            }
+
+            _mapper.Map(request, entity);
+
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.Korisnici>(entity);
+        }
+
     }
 }

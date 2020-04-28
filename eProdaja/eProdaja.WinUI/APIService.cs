@@ -13,8 +13,11 @@ namespace eProdaja.WinUI
 {
     public class APIService
     {
+        public static string username;
+        public static string password;
         private string _resource;
         public string endpoint = $"{Resources.ApiUrl}";
+
         public APIService(string resource)
         {
             _resource = resource;
@@ -28,6 +31,7 @@ namespace eProdaja.WinUI
             }
 
             var list = await $"{endpoint}{_resource}?{query}"
+               .WithBasicAuth(username, password)
                .GetJsonAsync<T>();
 
             return list;
@@ -37,7 +41,9 @@ namespace eProdaja.WinUI
         {
             var url = $"{endpoint}{_resource}/{id}";
 
-            return await url.GetJsonAsync<T>();
+            return await url
+                .WithBasicAuth(username, password)
+                .GetJsonAsync<T>();
         }
 
         public async Task<T> Insert<T>(object request)
@@ -46,7 +52,9 @@ namespace eProdaja.WinUI
 
             try
             {
-                return await url.PostJsonAsync(request).ReceiveJson<T>();
+                return await url
+                    .WithBasicAuth(username, password)
+                    .PostJsonAsync(request).ReceiveJson<T>();
             }
             catch (FlurlHttpException ex)
             {
@@ -70,7 +78,9 @@ namespace eProdaja.WinUI
             {
                 var url = $"{endpoint}{_resource}/{id}";
 
-                return await url.PutJsonAsync(request).ReceiveJson<T>();
+                return await url
+                    .WithBasicAuth(username, password)
+                    .PutJsonAsync(request).ReceiveJson<T>();
             }
             catch (FlurlHttpException ex)
             {

@@ -17,6 +17,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.AspNetCore.Authentication;
+using eProdaja.WebAPI.Security;
+using eProdaja.WebAPI.Services;
 
 namespace eProdaja
 {
@@ -40,6 +46,32 @@ namespace eProdaja
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "eProdaja API", Version = "v1" });
+
+                // basic auth swagger
+
+                c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "basic",
+                    In = ParameterLocation.Header,
+                    Description = "Basic Authorization header using the Bearer scheme."
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "basic"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
 
             // auto mapper
@@ -51,10 +83,14 @@ namespace eProdaja
             var connection = "Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;";
             services.AddDbContext<eProdajaContext>(options => options.UseSqlServer(connection));
 
+            services.AddAuthentication("BasicAuthentication")
+               .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
             //dependency injection
 
-            //services.AddScoped<IKorisniciService, KorisniciService>();
-            services.AddScoped<IUlogeService, UlogeService>();
+            services.AddScoped<IKorisniciService, KorisniciService>();
+
+            services.AddScoped<IService<Model.Uloge, object>, BaseService<Model.Uloge, object, Uloge>>();
 
             services.AddScoped<IService<Model.VrsteProizvoda, object>, BaseService<Model.VrsteProizvoda, object, VrsteProizvoda>>();
 
@@ -63,8 +99,8 @@ namespace eProdaja
             services.AddScoped<ICRUDService<Model.Proizvod, ProizvodiSearchRequest, ProizvodiInsertRequest, ProizvodUpdateRequest>
                 ,ProizvodService>();
             
-            services.AddScoped<ICRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest>
-                ,KorisniciService>();
+            //services.AddScoped<ICRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest>
+            //    ,KorisniciService>();
 
         }
 
@@ -86,6 +122,8 @@ namespace eProdaja
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 

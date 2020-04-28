@@ -78,6 +78,12 @@
     <Compile Include="Forms\frmKorisniciDetalji.Designer.cs">
       <DependentUpon>frmKorisniciDetalji.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmProizvodi.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmKorisniciDetalji.resx">
       <DependentUpon>frmKorisniciDetalji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProizvodi.resx">
       <DependentUpon>frmProizvodi.cs</DependentUpon>
