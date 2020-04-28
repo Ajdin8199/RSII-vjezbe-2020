@@ -14,9 +14,9 @@ namespace eProdaja.Mappers
         {
             CreateMap<Models.Korisnici, Model.Korisnici>(); 
             CreateMap<Models.KorisniciUloge, Model.KorisniciUloge>(); 
+            CreateMap<Models.Uloge, Model.Uloge>();
             CreateMap<KorisniciInsertRequest, Models.Korisnici>(); 
             CreateMap<KorisniciUpdateRequest, Models.Korisnici>(); 
-            CreateMap<Uloge, Model.Uloge>();
             CreateMap<VrsteProizvoda, Model.VrsteProizvoda>();
             CreateMap<JediniceMjere, Model.JediniceMjere>();
             CreateMap<Proizvodi, Model.Proizvod>();

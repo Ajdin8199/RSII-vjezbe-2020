@@ -9,6 +9,6 @@ namespace eProdaja.Model.Requests
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string Email { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
     }
 }

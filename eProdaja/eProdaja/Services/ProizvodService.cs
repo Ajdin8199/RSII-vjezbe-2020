@@ -22,6 +22,11 @@ namespace eProdaja.Services
             {
                 query = query.Where(x => x.VrstaId == search.VrstaId);
             }
+            
+            if(search?.JedinicaMjereId != null && search.JedinicaMjereId != 0)
+            {
+                query = query.Where(x => x.JedinicaMjereId == search.JedinicaMjereId);
+            }
 
             var list = query.ToList();
 

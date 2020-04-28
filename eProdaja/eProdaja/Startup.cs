@@ -23,6 +23,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.AspNetCore.Authentication;
 using eProdaja.WebAPI.Security;
 using eProdaja.WebAPI.Services;
+using Newtonsoft.Json;
 
 namespace eProdaja
 {
@@ -40,6 +41,9 @@ namespace eProdaja
         {
             services.AddControllers();
             services.AddMvc(x => x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddMvc(x => x.EnableEndpointRouting = false)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             // komanda za instalaciju
             //Install-Package Swashbuckle.AspNetCore -Version 5.0.0

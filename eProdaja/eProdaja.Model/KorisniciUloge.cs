@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,6 +12,7 @@ namespace eProdaja.Model
         public int UlogaId { get; set; }
         public DateTime DatumIzmjene { get; set; }
         public Korisnici Korisnik { get; set; }
+        //[JsonIgnore]
         public Uloge Uloga { get; set; }
     }
 }
