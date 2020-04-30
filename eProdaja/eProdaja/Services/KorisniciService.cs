@@ -64,7 +64,7 @@ namespace eProdaja.WebAPI.Services
 
         public List<Model.Korisnici> Get(KorisniciSearchRequest request)
         {
-            var query = _context.Korisnici.AsQueryable();
+            var query = _context.Korisnici.Include("KorisniciUloge.Uloga").AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request?.Ime))
             {
@@ -84,6 +84,20 @@ namespace eProdaja.WebAPI.Services
             if (request?.Status != null)
             {
                 query = query.Where(x => x.Status == request.Status);
+            }
+
+            if (request?.UlogaId != null && request?.UlogaId != 0)
+            {
+                var q = _context.KorisniciUloge.AsQueryable();
+
+                if (request?.UlogaId != null && request.UlogaId != 0)
+                {
+                    q = q.Where(x => x.UlogaId == request.UlogaId);
+                }
+
+                var l = q.Select(x => x.Korisnik).ToList();
+
+                return _mapper.Map<List<Model.Korisnici>>(l);
             }
 
             var list = query.ToList();

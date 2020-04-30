@@ -40,7 +40,7 @@ namespace eProdaja
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMvc(x => x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(x => x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             services.AddMvc(x => x.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
@@ -93,6 +93,8 @@ namespace eProdaja
             //dependency injection
 
             services.AddScoped<IKorisniciService, KorisniciService>();
+
+            services.AddScoped<IKorisniciUlogeService, KorisniciUlogeService>();
 
             services.AddScoped<IService<Model.Uloge, object>, BaseService<Model.Uloge, object, Uloge>>();
 

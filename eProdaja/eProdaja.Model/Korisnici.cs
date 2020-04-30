@@ -14,7 +14,7 @@ namespace eProdaja.Model
         public string Telefon { get; set; }
         public string KorisnickoIme { get; set; }
         public bool? Status { get; set; }
-
+        [JsonIgnore]
         public ICollection<KorisniciUloge> KorisniciUloge { get; set; }
     }
 }

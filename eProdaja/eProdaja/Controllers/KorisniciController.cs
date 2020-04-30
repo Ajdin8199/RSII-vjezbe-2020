@@ -39,14 +39,14 @@ namespace eProdaja.Controllers
             return _service.Get(request);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public Model.Korisnici Insert(KorisniciInsertRequest request)
         {
             return _service.Insert(request);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public Model.Korisnici Update(int id, [FromBody]KorisniciInsertRequest request)
         {
