@@ -16,12 +16,22 @@ namespace eProdaja.WinUI
         public static string username;
         public static string password;
         private string _resource;
+        private string _extension;
+        private int _value;
         public string endpoint = $"{Resources.ApiUrl}";
 
         public APIService(string resource)
         {
             _resource = resource;
         }
+
+        public APIService(string resource, string extenstion, int val)
+        {
+            _resource = resource;
+            _extension = extenstion;
+            _value = val;
+        }
+
         public async Task<T> GetAll<T>(object searchRequest = null)
         {
             var query = "";
@@ -30,11 +40,21 @@ namespace eProdaja.WinUI
                 query = await searchRequest?.ToQueryString();
             }
 
-            var list = await $"{endpoint}{_resource}?{query}"
-               .WithBasicAuth(username, password)
-               .GetJsonAsync<T>();
+            if(_extension != null)
+            {
+                var list = await $"{endpoint}{_resource}/{_value}/{_extension}?{query}"
+                    .WithBasicAuth(username, password)
+                    .GetJsonAsync<T>();
+                return list;
+            }
+            else
+            {
+                var list = await $"{endpoint}{_resource}?{query}"
+                    .WithBasicAuth(username, password)
+                    .GetJsonAsync<T>();
+                return list;
+            }
 
-            return list;
         }
 
         public async Task<T> GetById<T>(object id)

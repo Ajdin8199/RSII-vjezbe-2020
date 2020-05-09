@@ -16,13 +16,15 @@ namespace eProdaja.WinUI
     {
         APIService korisniciService = new APIService("Korisnici");
         APIService ulogeService = new APIService("Uloge");
-
+        APIService korisniciUlogeService;
+        
         private Korisnici _korisnik;
 
         public frmKorisniciDetalji(Korisnici korisnik = null)
         {
             InitializeComponent();
             _korisnik = korisnik;
+            korisniciUlogeService = new APIService("Uloga", "Korisnici", _korisnik.KorisnikId);
         }
 
         private async void frmKorisniciDetalji_Load(object sender, EventArgs e)
