@@ -18,7 +18,7 @@ namespace eProdaja.WinUI
         private string _resource;
         private string _extension;
         private int _value;
-        public string endpoint = $"{Resources.ApiUrl}";
+        public string endpoint = "http://localhost:52237/api/";
 
         public APIService(string resource)
         {

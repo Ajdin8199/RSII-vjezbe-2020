@@ -15,8 +15,8 @@ namespace eProdaja.Mobile
 
         private readonly string _route;
 
-#if DEBUG
-        private string _apiUrl = "http://localhost:5000/api/";
+#if DEBUG 
+        private string _apiUrl = "http://localhost:52237/api";
 #endif
 #if RELEASE
         private string _apiUrl = "https://mywebsite.azure.com/api/";
