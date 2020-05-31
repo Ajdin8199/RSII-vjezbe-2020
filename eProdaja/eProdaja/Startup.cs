@@ -84,7 +84,7 @@ namespace eProdaja
 
             // skripta za kreiranje klasa iz baze
             //Scaffold - DbContext 'Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;' Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models
-            var connection = "Data Source=.;Initial Catalog=eProdaja; Integrated Security = true;";
+            var connection = Configuration.GetConnectionString("eProdaja");
             services.AddDbContext<eProdajaContext>(options => options.UseSqlServer(connection));
 
             services.AddAuthentication("BasicAuthentication")
