@@ -12,7 +12,6 @@ namespace eProdaja
         public static void Init(eProdajaContext context)
         {
             context.Database.Migrate();
-
         }
     }
 }

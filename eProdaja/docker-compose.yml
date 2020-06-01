@@ -20,7 +20,7 @@ services:
     environment:
       - ConnectionStrings:eProdaja=Server=eprodaja-sql,1433;Database=eProdajaVjezbe;User=sa;Password=QWElkj132!;ConnectRetryCount=0
     ports:
-      - 5000:5050
+      - 5000:80
     networks:
       - eprodajanet      
     links:
