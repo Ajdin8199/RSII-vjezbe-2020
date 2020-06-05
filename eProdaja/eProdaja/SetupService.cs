@@ -11,7 +11,8 @@ namespace eProdaja
     {
         public static void Init(eProdajaContext context)
         {
-            context.Database.Migrate();
+            if (context.Database.EnsureCreated())
+                context.Database.Migrate();
         }
     }
 }

@@ -18,9 +18,16 @@ namespace eProdaja.Models
                 JedinicaMjereId = 1,
                 Naziv = "Test"
             });
+            
+            modelBuilder.Entity<Uloge>().HasData(new eProdaja.Models.Uloge()
+            {
+                UlogaId = 1,
+                Naziv = "Test"
+            });
 
             Korisnici testUser = new eProdaja.Models.Korisnici()
             {
+                KorisnikId = 1,
                 Ime = "test",
                 Prezime = "test",
                 Email = "test@gmail.com",
@@ -30,7 +37,7 @@ namespace eProdaja.Models
                 Telefon = "123456789"
             };
             testUser.LozinkaHash = GenerateHash(testUser.LozinkaSalt, "test");
-            
+
             modelBuilder.Entity<Korisnici>().HasData(testUser);
         }
 
